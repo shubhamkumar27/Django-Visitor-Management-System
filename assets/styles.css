@@ -1,0 +1,60 @@
+body{
+    font-family: 'Lato', sans-serif;
+}
+
+#babysitters {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 20px;
+    grid-template-rows: minmax(10px, auto);
+}
+
+.helptext{
+    display: none;
+}
+
+label{
+    display: none
+}
+
+#id_username, #id_password, #id_password1, #id_password2, #childcare_text{
+    width: 320px;
+    margin-top: 20px;
+    padding: 5px;
+    border-radius: 5px;
+    outline: none;
+}
+
+input[type='submit']{
+    display: inline-block;
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: .25rem;
+    cursor: pointer;
+    transition: color .15s;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 120px;
+}
+
+.errorlist{
+    padding: 0;
+}
+
+.errorlist li{
+    list-style-type: none;
+    color: tomato;
+}
