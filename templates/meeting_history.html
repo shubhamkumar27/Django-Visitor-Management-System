@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static from staticfiles %}
+{% block title %}<title>Meeting History</title>{% endblock %}
+{% block nav %} 
+<div class="form-inline my-2 my-lg-0">
+        {% if user.is_authenticated %}
+        <h6 class="text-dark mx-3 my-auto">Hello, Admin</h6>
+        <a class="btn btn-primary mx-2" href="/dashboard" role="button">Dashboard</a>
+        <a class="btn btn-danger mx-2" href="/logout" role="button">Logout</a>
+        {% else %}
+        <a class="btn btn-success mx-2" href="/admin_login" role="button">Admin Login</a>
+        {% endif %}
+        
+  </div>
+{% endblock %}
+{% block header %}
+<header class="masthead text-center" style="background:url('{% static '/img/bg-3.png' %}')no-repeat center center fixed;background-size:cover; height: 38rem;">
+    <h2 class='text-monospace text-light mx-5'>Today's Meeting History</h1>
+    <div class="container-fluid text-center" >
+            <table class="table table-light">
+            <thead class="thead-dark">
+              <TR>
+              <TH>Meeting Id</TH>
+              <TH>Visitor's Name</TH>
+              <TH>Visitor's Contact</TH>
+              <TH>Host Name</TH>
+              <TH>Time In</TH>
+              <TH>Time Out</TH>
+          </TR>
+            </thead>
+              <tbody>
+                    {% for m in meeting %}
+                    <TR>
+                        <TD>{{ m.id}}</TD>
+                        <TD>{{ m.visitor_name}}</TD>
+                        <TD>{{ m.visitor_phone}}</TD>
+                        <TD>{{ m.host}}</TD>
+                        <TD>{{ m.time_in}}</TD>
+                        {% if m.time_out %}
+                        <TD>{{ m.time_out}}</TD>
+                        {% else %}
+                        <TD class="text-danger text-monospace"><strong>BUSY</strong></TD>
+                        {% endif %}
+                        </TR>
+                    {% endfor %}
+              </tbody>
+            </table>
+          </div>
+{% endblock %}

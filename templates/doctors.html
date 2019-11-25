@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static from staticfiles %}
+{% block title %}<title>Doctors</title>{% endblock %}
+{% block nav %}
+<div class="form-inline my-2 my-lg-0">
+        {% if user.is_authenticated %}
+        <h6 class="text-dark mx-3 my-auto">Hello, Admin</h6>
+        <a class="btn btn-primary mx-2" href="/dashboard" role="button">Dashboard</a>
+        <a class="btn btn-danger mx-2" href="/logout" role="button">Logout</a>
+        {% else %}
+        <a class="btn btn-success mx-2" href="/admin_login" role="button">Admin Login</a>
+        {% endif %}
+        
+  </div>
+{% endblock %}
+{% block header %}
+<header class="masthead text-white text-center" style="background:url('{% static '/img/bg-2.jpg' %}')no-repeat center center fixed;background-size:cover;">
+    <div class="text-center">
+        <h1 class='text-monospace text-light' style="height: 4rem;">MEET OUR SPEACIALIST TEAM</h1>
+    </div>
+    <hr class="bg-light" style="width: 60rem;">
+    <div class="container">
+            <div class="row">
+                    {% for p in hosts %}
+                        <div class="col">       
+                        <div class="col mx-auto my-3">
+                                    <div class="card text-dark" style="width: 14rem;">
+                                            <img src="/media/{{ p.host_image }}" class="card-img-top" alt="...">
+                                            <div class="card-body">
+                                              <h5 class="card-title">{{ p.host_name }}</h5>
+                                              <p class="card-text">{{ p.host_desc }}</p>
+                                            </div>
+                                            <ul class="list-group list-group-flush">
+                                              <li class="list-group-item bg-danger text-light">{{ p.available }}</li>
+                                            </ul>
+                                          </div>
+                                    
+                            </div>
+                        </div>
+                        {% endfor %}
+                        </div>
+                </div>
+</div>
+</header>
+{% endblock %}
+{% block footer %}
+<footer class="footer bg-dark">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 my-auto h-100 text-center text-lg-left">
+                    <ul class="list-inline mb-2">
+                        <li class="list-inline-item text-light">Contact</li>
+                        <li class="list-inline-item text-light"><span>:</span></li>
+                        <li class="list-inline-item text-primary">healthplussupport@gmail.com</li>
+                    </ul>
+                    <p class="text-muted small mb-4 mb-lg-0">© Brand 2019. All Rights Reserved.</p>
+                </div>
+                <div class="col-lg-6 my-auto h-100 text-center text-lg-right">
+                    <ul class="list-inline mb-0">
+                        <li class="list-inline-item"><a href="https://github.com/shubhamkumar27"><i class="fa fa-github fa-2x fa-fw"></i></a></li>
+                        <li class="list-inline-item"><a href="#"><i class="fa fa-facebook fa-2x fa-fw"></i></a></li>
+                        <li class="list-inline-item"><a href="#"><i class="fa fa-twitter fa-2x fa-fw"></i></a></li>
+                        <li class="list-inline-item"><a href="#"><i class="fa fa-instagram fa-2x fa-fw"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row footer-bottom d-flex justify-content-between my-2">
+                    <p class="col-lg-8 col-sm-12 footer-text m-0 text-white"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    Made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://github.com/shubhamkumar27" target="_blank">Shubham Kumar</a></p>
+        </div>
+        </div>
+    </footer>
+{% endblock %}

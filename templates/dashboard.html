@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static from staticfiles %}
+{% block title %}<title>Dashboard</title>{% endblock %}
+{% block nav %} 
+<div class="form-inline my-2 my-lg-0">
+        {% if user.is_authenticated %}
+        <h6 class="text-dark mx-3 my-auto">Hello, Admin</h6>
+        <a class="btn btn-primary mx-2" href="/dashboard" role="button">Dashboard</a>
+        <a class="btn btn-danger mx-2" href="/logout" role="button">Logout</a>
+        {% else %}
+        <a class="btn btn-success mx-2" href="/admin_login" role="button">Admin Login</a>
+        {% endif %}
+        
+  </div>
+{% endblock %}
+{% block header %}
+<header class="masthead text-white text-center" style="background:url('{% static '/img/bg-3.png' %}')no-repeat center fixed;background-size:cover;">
+    <a class="btn btn-warning btn-lg mx-5 mb-2 font-weight-bolder" href="meeting_history/" role="button" style="width: 27rem; display: inline-block;">Today's Meeting History</a>
+    <a class="btn btn-warning btn-lg mx-5 mb-2 font-weight-bolder" href="profile_manager/" role="button" style="width: 27rem; display: inline-block;">Profile Manager</a>
+    <hr class="bg-light" style="width: 60rem;">
+    <div class="container">
+            <div class="row">
+            {% for p in hosts %}
+                <div class="col">       
+                <div class="col mx-auto mb-5">
+                            <div class="card text-dark" style="width: 14rem;">
+                                    <img src="/media/{{ p.host_image }}" class="card-img-top" alt="...">
+                                    <div class="card-body">
+                                      <small class="text-primary font-weight-bolder">Profile Id : {{ p.id }}</small>
+                                      <h5 class="card-title">{{ p.host_name }}</h5>
+                                      <p class="card-text">{{ p.host_desc }}</p>
+                                    </div>
+                                <form action = "meeting/" method="post">{% csrf_token %}
+                                    <ul class="list-group list-group-flush">
+                                      {% if p.status %}
+                                        <li class="list-group-item bg-success text-white">FREE</li>
+                                        <li class="list-group-item"><button class="btn btn-primary mx-2" type="submit" value="{{ p.id }}" name="meeting">Arrange Meeting</button></li>
+                                        {% else %}
+                                        <li class="list-group-item bg-danger text-white">BUSY</li>
+                                        
+                                        <li class="list-group-item">
+                                        <button class="btn btn-warning" style="display:inline-block;" type="submit" value="{{ p.current_meeting_id }}" name="visitor">Visitor</button>
+                                        <button class="btn btn-danger" style="display:inline-block;" type="submit" value="{{ p.current_meeting_id }}" name="check_out">Check Out</button>
+                                        </li>
+                                        
+                                        {% endif %}
+                                      
+                                    </ul>
+                                    </form>
+                                  </div>
+                            
+                    </div>
+                </div>
+                {% endfor %}
+                </div>
+</div>
+</header>
+{% endblock %}
+{% block footer %}
+<footer class="footer bg-light" style="height: 2rem;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 my-auto h-100 text-center text-lg-left">
+                    <div class="row footer-bottom d-flex justify-content-between mb-2">
+                    <p class="text-muted small mx-3 mb-4 mb-lg-0">© Brand 2019. All Rights Reserved.</p>
+                    <p class="col-lg-8 col-sm-12 footer-text m-0 text-dark"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    Made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://github.com/shubhamkumar27" target="_blank">Shubham Kumar</a></p>
+                    </div>
+                </div>
+                    <div class="col-lg-6 my-auto h-100 text-center text-lg-right">
+                        <ul class="list-inline mb-0">
+                            <li class="list-inline-item"><a href="#"><i class="fa fa-github fa-2x fa-fw"></i></a></li>
+                            <li class="list-inline-item"><a href="#"><i class="fa fa-facebook fa-2x fa-fw"></i></a></li>
+                            <li class="list-inline-item"><a href="#"><i class="fa fa-twitter fa-2x fa-fw"></i></a></li>
+                            <li class="list-inline-item"><a href="#"><i class="fa fa-instagram fa-2x fa-fw"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+        </div>
+    </footer>
+{% endblock %}

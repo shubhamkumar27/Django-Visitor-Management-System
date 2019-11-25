@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load static from staticfiles %}
+{% block title %}<title>HealthPlus</title>{% endblock %}
+{% block nav %} 
+<div class="form-inline my-2 my-lg-0">
+        {% if user.is_authenticated %}
+        <h6 class="text-dark mx-3 my-auto">Hello, Admin</h6>
+        <a class="btn btn-primary mx-2" href="/dashboard" role="button">Dashboard</a>
+        <a class="btn btn-danger mx-2" href="/logout" role="button">Logout</a>
+        {% else %}
+        <a class="btn btn-success mx-2" href="admin_login/" role="button">Admin Login</a>
+        {% endif %}
+        
+  </div>
+{% endblock %}
+
+{% block header %}
+<header class="masthead text-white text-center " style="background:url('{% static '/img/bg-2.jpg' %}')no-repeat center center;background-size:cover;">
+    <div class="overlay"></div>
+    <div class="container">
+    <div class="row">
+        <div class="col-xl-6 mx-auto">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-title text-dark">Having any health issue ?</h5>
+                        <p class="card-text text-dark">Look for the doctor according to your problems.</p>
+                        <a href="/doctors" class="btn btn-primary">Find your doctor.</a>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+</header>
+{% endblock %}
+
+{% block body %}
+<section class="features-icons bg-light text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="mx-auto features-icons-item">
+                        <div class="d-flex features-icons-icon"><i class="icon-screen-desktop m-auto text-primary" ></i></div>
+                        <h3>FIND YOUR DOCTOR</h3>
+                        <p class="lead mb-0">Select a doctor for your problem.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="mx-auto features-icons-item ">
+                        <div class="d-flex features-icons-icon"><i class="icon-layers m-auto text-primary" ></i></div>
+                        <h3>VISIT AND MEET</h3>
+                        <p class="lead mb-0">Visit and meet with your doctor.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="mx-auto features-icons-item">
+                        <div class="d-flex features-icons-icon"><i class="icon-check m-auto text-primary" ></i></div>
+                        <h3>CONSULT PROBLEMS</h3>
+                        <p class="lead mb-0">Consult problems with your doctors.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block footer %}
+<footer class="footer bg-dark">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 h-100 text-center text-lg-left">
+                    <ul class="list-inline mb-2">
+                        <li class="list-inline-item text-light">Contact</li>
+                        <li class="list-inline-item text-light"><span>:</span></li>
+                        <li class="list-inline-item text-primary">healthplussupport@gmail.com</li>
+                    </ul>
+                    <p class="text-muted small mb-4 mb-lg-0">© Brand 2019. All Rights Reserved.</p>
+                </div>
+                <div class="col-lg-6 h-100 text-center text-lg-right">
+                    <ul class="list-inline mb-0">
+                        <li class="list-inline-item"><a href="https://github.com/shubhamkumar27"><i class="fa fa-github fa-2x fa-fw"></i></a></li>                       
+                        <li class="list-inline-item"><a href="#"><i class="fa fa-facebook fa-2x fa-fw"></i></a></li>
+                        <li class="list-inline-item"><a href="#"><i class="fa fa-twitter fa-2x fa-fw"></i></a></li>
+                        <li class="list-inline-item"><a href="#"><i class="fa fa-instagram fa-2x fa-fw"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row footer-bottom d-flex justify-content-between mt-2">
+                    <p class="col-lg-8 col-sm-12 footer-text m-0 text-white"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    Made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://github.com/shubhamkumar27" target="_blank">Shubham Kumar</a></p>
+        </div>
+        </div>
+    </footer>
+{% endblock %}

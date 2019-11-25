@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load static from staticfiles %}
+{% block title%}<title>Meeting Form</title>{% endblock %}
+{% block nav %}
+<div class="form-inline my-2 my-lg-0">
+  {% if user.is_authenticated %}
+  <h6 class="text-dark mx-3 my-auto">Hello, Admin</h6>
+  <a class="btn btn-primary mx-2" href="/dashboard" role="button">Dashboard</a>
+  <a class="btn btn-danger mx-2" href="/logout" role="button">Logout</a>
+  {% else %}
+  <a class="btn btn-success mx-2" href="/admin_login" role="button"
+    >Admin Login</a
+  >
+  {% endif %}
+</div>
+{% endblock %}
+
+{% block header %}
+<header
+  class="masthead text-white text-center "
+  style="background:url('{% static '/img/bg.jpeg' %}')no-repeat center center fixed;background-size:cover; height: 38rem;"
+>
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row mx-auto">
+      <div class="col">
+        <div class="card" style="width: 30rem;">
+          <h5 class="card-header bg-info text-monospace text-light text-center">
+            <strong>Visitor's Information</strong>
+          </h5>
+
+          <div class="card-body px-lg-5 mt-2">
+            <form
+              class="text-center"
+              style="color: #757575;"
+              action="/dashboard/save_meeting/"
+              method="POST"
+            >
+              {% csrf_token %}
+
+              <div class="form-row">
+                <div class="col">
+                  <div class="md-form">
+                    {{ form.visitor_name }}
+                  </div>
+                </div>
+              </div>
+
+              <div class="md-form my-3">
+                {{ form.visitor_email }}
+              </div>
+
+              <div class="md-form my-3">
+                {{ form.visitor_phone }}
+              </div>
+
+              <button
+                class="btn bg-info btn-rounded my-2 waves-effect z-depth-0 text-light"
+                type="submit"
+                value="{{ host.host_name }}"
+                name="host"
+                style="width: 10rem;"
+              >
+                Check In
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card text-dark" style="width: 35rem;">
+          <h5 class="card-header bg-info text-monospace text-light text-center">
+            <strong>Host's Information</strong>
+          </h5>
+          <div class="row">
+            <div class="col my-auto">
+              <div class="card-body ">
+                <h3 class="card-title">{{ host.host_name }}</h3>
+                <h5 class="card-text">{{ host.host_desc }}</h5>
+              </div>
+            </div>
+
+            <div class="col">
+              <img
+                src="/media/{{ host.host_image }}"
+                class="card-img-top"
+                alt="..."
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+{% endblock %}

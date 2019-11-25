@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load static from staticfiles %}
+{% block title %}<title>Profile Manager</title>{% endblock %}
+{% block nav %} 
+<div class="form-inline my-2 my-lg-0">
+        {% if user.is_authenticated %}
+        <h6 class="text-dark mx-3 my-auto">Hello, Admin</h6>
+        <a class="btn btn-primary mx-2" href="/dashboard" role="button">Dashboard</a>
+        <a class="btn btn-danger mx-2" href="/logout" role="button">Logout</a>
+        {% else %}
+        <a class="btn btn-success mx-2" href="/admin_login" role="button">Admin Login</a>
+        {% endif %}
+        
+  </div>
+{% endblock %}
+{% block header %}
+
+<header class="masthead text-white text-center " style="background:url('{% static '/img/bg.jpeg' %}')no-repeat center center fixed;background-size:cover; height: 38rem;">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="card mx-auto" style="width: 40rem; display: inline-block;">
+                <h5 class="card-header bg-info text-monospace text-center">
+                    <strong class="text-center">Add Profile Details</strong>
+                </h5>
+            
+                <div class="card-body px-lg-5 mt-2">
+                    {% if edit %}
+                    <form class="text-center" style="color: #757575;" action="/dashboard/edit_profile/" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                    {% else %}
+                    <form class="text-center" style="color: #757575;" action="/dashboard/profile_manager/" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                    {% endif %}
+                        <div class="form-row">
+                            <div class="col">
+                            <div class="row">                                
+                                <div class="md-form mx-auto" style="display:inline-block;">
+                                    {{ form.host_name }}
+                                </div>
+                                <div class="md-form mx-auto" style="display:inline-block;">
+                                    {{ form.host_desc }}
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+
+                        <div class="row my-3">
+                                <div class="md-form mx-auto" style="display:inline-block;">
+                                        {{ form.host_email }}
+                                </div>                                
+                                <div class="md-form mx-auto" style="display:inline-block;">
+                                    {{ form.host_phone }}
+                                </div>
+                            </div>
+                        <div class="md-form" style="display:inline-block;">
+                                {{ form.available }}    
+                            </div>
+                        <div class="row text-monospace mt-2 text-dark" style="margin-left: 9rem;">
+                                <small class="font-weight-bold text-danger">(Please upload square fit images only)</small>  
+                            </div>
+                        <div class="row mt-3">
+                        <label class="ml-4" style="display: inline-block;">Image :</label>
+                        <div class="md-form ml-2" style="display:inline-block;">
+                                {{ form.host_image }}    
+                            </div>
+                            {% if edit %}
+                            <button class="btn bg-warning mx-auto btn-rounded waves-effect z-depth-0" value="{{ info }}" name="editing" type="submit" style="width: 7rem; display:inline-block;">Save</button>
+                            {% else %}
+                            <button class="btn bg-success mx-auto btn-rounded waves-effect z-depth-0 text-light" type="submit" style="width: 7rem; display:inline-block;">Save</button>
+                            {% endif %}
+                        </div>
+                    </form>
+
+                </div>
+                </div>
+                <div class="card mx-auto" style="width: 20rem; display: inline-block;">
+                        <h5 class="card-header bg-info text-monospace text-light text-center">
+                            <strong>Edit or Delete Profile</strong>
+                        </h5>
+                    
+                        <div class="card-body px-lg-5">
+                    
+                            <form class="text-center" style="color: #757575;" action="/dashboard/edit_delete/" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                                <h6 class="text-center text-dark">Enter profile ID of host</h6>
+                                <div class="form-row my-2">
+                                        <div class="md-form mx-auto my-2" style="display:inline-block;">
+                                            <input type="text" class="form-control" style="width: 14rem;" name = "id" placeholder="Enter Profile Id">
+                                        </div>
+                                </div>
+                                <button class="btn bg-warning mx-auto mt-4 mb-2 btn-rounded waves-effect z-depth-0" type="submit" value="edit" name="edit" style="width: 10rem;">Edit</button>
+                                <div class="row text-monospace mt-1 mb-2 text-dark">
+                                        <small class="font-weight-bold text-danger">(Please reconsider,it cannot be recovered once deleted)</small>  
+                                    </div>
+                                <button class="btn bg-danger mx-auto btn-rounded waves-effect z-depth-0 text-light" type="submit" value="delete" name="delete" style="width: 10rem;">Delete</button>
+                            </form>
+                        </div>
+                </div>
+            </div>
+            </div>
+</header>
+{% endblock %}
+
