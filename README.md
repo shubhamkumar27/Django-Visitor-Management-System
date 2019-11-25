@@ -27,4 +27,3 @@ As there are two major things to store, which are host details and meeting/visit
 - http://healthplus.pythonanywhere.com/
 
 ### Screenshots
-![Working](media/demo.webm)
