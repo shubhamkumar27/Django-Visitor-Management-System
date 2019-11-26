@@ -9,6 +9,8 @@ from .models import Host, Meeting
 from pushbullet import PushBullet
 from .forms import *
 import datetime
+import requests
+import json
 
 
 # Create your views here.
@@ -72,7 +74,7 @@ def save_meeting(request):
             subject = "Visitor Information"
             visitor = instance
             email(subject,visitor,rec)
-            sms(subject,visitor,host)
+            sendsms(subject,visitor,host)
     return redirect('/dashboard')
 
 @login_required(login_url='/admin_login/')
@@ -137,12 +139,19 @@ def email(subject,visitor,rec,host=None):
         pass
     return
 
-def sms(subject,visitor,host):
+def sendsms(subject,visitor,host):
+    URL = 'https://www.way2sms.com/api/v1/sendCampaign'
     msg = "Hey, "+host.host_name+", Your Upcoming meeting is with : "+visitor.visitor_name+", Contact no. : "+str(visitor.visitor_phone)+", Email Id : "+visitor.visitor_email+". Check-In Time is : "+str(visitor.time_in)[11:16]
-    rec = '+91'+str(host.host_phone)
+    req_params = {
+    'apikey':'HD6B0LV0WB8WZV9KISEXKQMLJI32U20C',
+    'secret':'1H0VBOL7M4OEJSM0',
+    'usetype':'stage',
+    'phone': '+91'+str(host.host_phone),
+    'message':msg,
+    'senderid':'healthplusnotification@gmail.com'
+    }
     try:
-        p =  PushBullet('o.0CZaKLWsOzzEfG7kACoZ8paOeun5ecep')
-        p.push_sms(p.devices[0],rec,msg)
+        requests.post(URL, req_params)
     except:
         pass
     return
