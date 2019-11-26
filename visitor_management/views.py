@@ -5,15 +5,18 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from accounts.models import Host
 
+## Homepage
 def home(request):
     return render(request, 'homepage.html')
 
+## Doctors details for visitors
 def doctors(request):
     hosts = Host.objects.all()
     parameters = {'hosts':hosts}
     print(hosts) 
     return render(request,'doctors.html',parameters)
 
+## Login page for admin
 def loginPage(request):
     if request.method== 'POST':
         username = request.POST['username']
@@ -31,6 +34,7 @@ def loginPage(request):
     else:
         return render(request,'admin_login.html')
 
+## Logout for admin
 @login_required(login_url='/admin_login/')
 def logout(request):
     auth.logout(request)

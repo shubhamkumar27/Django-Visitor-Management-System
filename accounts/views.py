@@ -14,6 +14,7 @@ import json
 
 
 # Create your views here.
+
 @login_required(login_url='/admin_login/')
 def dashboard(request):
     h = Host.objects.all()
@@ -25,14 +26,14 @@ def dashboard(request):
 def meeting_manager(request):
     if request.method == 'POST':
 
-        if request.POST.get("visitor"):
+        if request.POST.get("visitor"): # If visitor button is clicked, visitor details are shown
             meeting_id = request.POST.get("visitor")
             meeting = Meeting.objects.get(id = meeting_id)
             host = Host.objects.get(current_meeting_id = meeting_id)
             meeting_details = {'meeting' : meeting, 'host' : host}
             return render(request, 'visitor_details.html', meeting_details)
 
-        elif request.POST.get("check_out"):
+        elif request.POST.get("check_out"): # If checkout button is clicked, email is sent to visitor and host's status is set to free
             m_id = request.POST.get("check_out")
             meeting = Meeting.objects.get(id = m_id)
             host = Host.objects.get(current_meeting_id=m_id)
@@ -47,7 +48,7 @@ def meeting_manager(request):
             email(Subject,visitor,rec,host)
             return redirect('/dashboard')
 
-        elif request.POST.get("meeting"):
+        elif request.POST.get("meeting"): # Opens the meeting form
             host_id = request.POST.get("meeting")
             host = Host.objects.get(id = host_id)
             form = Meeting_form()
@@ -56,6 +57,7 @@ def meeting_manager(request):
     else:
         return redirect('/dashboard')
 
+# Saves the visitor details filled in meeting form
 @login_required(login_url='/admin_login/')
 def save_meeting(request):
     if request.method == 'POST':
@@ -77,6 +79,7 @@ def save_meeting(request):
             sendsms(subject,visitor,host)
     return redirect('/dashboard')
 
+# Shows the meetings history of that day
 @login_required(login_url='/admin_login/')
 def meeting_history(request):
     meetings = Meeting.objects.filter(date = datetime.datetime.now())
@@ -84,6 +87,7 @@ def meeting_history(request):
     info = {'meeting':m}
     return render(request, 'meeting_history.html',info)
 
+# Opens the profile manager
 @login_required(login_url='/admin_login/')
 def profile_manager(request):
     if request.method=='POST':
@@ -95,6 +99,7 @@ def profile_manager(request):
         form = Add_profile()
         return render(request, 'profile_manager.html', {'form' : form})
 
+# Checks for the given id in host database and fills the add profile form automatically with it
 @login_required(login_url='/admin_login/')
 def edit_profile(request):
     if request.method == 'POST':
@@ -107,6 +112,7 @@ def edit_profile(request):
     else:
         return redirect('/dashboard/profile_manager')
 
+# checks which button was clicked, either edit or delete and redirects them respectively
 @login_required(login_url='/admin_login/')
 def edit_delete(request):
     if request.method=='POST':
@@ -124,6 +130,7 @@ def edit_delete(request):
     else:
         return redirect('/dashboard/profile_manager')
 
+# Sends the email to both host and visitor
 def email(subject,visitor,rec,host=None):
     sender = 'healthplusnotification@gmail.com'
     if host:
@@ -139,6 +146,7 @@ def email(subject,visitor,rec,host=None):
         pass
     return
 
+# Sends the SMS to host
 def sendsms(subject,visitor,host):
     URL = 'https://www.way2sms.com/api/v1/sendCampaign'
     msg = "Hey, "+host.host_name+", Your Upcoming meeting is with : "+visitor.visitor_name+", Contact no. : "+str(visitor.visitor_phone)+", Email Id : "+visitor.visitor_email+". Check-In Time is : "+str(visitor.time_in)[11:16]

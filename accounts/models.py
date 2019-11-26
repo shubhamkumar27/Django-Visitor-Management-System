@@ -3,6 +3,7 @@ import datetime
 
 # Create your models here.
 
+# HOST MODEL
 class Host(models.Model):
     id = models.AutoField
     host_name = models.CharField(max_length=50)
@@ -18,6 +19,7 @@ class Host(models.Model):
     def __str__(self):
         return str(self.id) + " : " + str(self.host_name)
 
+# MEETING MODEL
 class Meeting(models.Model):
     id = models.AutoField
     visitor_name = models.CharField(max_length=50)
