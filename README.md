@@ -1,4 +1,4 @@
-# HealthPlus-Visitor-Management-System
+# Summergeeks : Health-Visitor-Management-System
 A Visitor Management Web App made using Django.
 
 This is a simple web application which can be used for managing meetings and visitor details. It can keep track of all the meetings and can send emails and sms to host and visitor about their meeting details.
@@ -71,7 +71,7 @@ Let a visitor wants to meet a host, he goes to reception and asks for the same. 
 ## Local Machine development setup
 - Clone the repository on your machine 
     ```
-    git clone https://github.com/shubhamkumar27/HealthPlus-Visitor-Management-System/
+    git clone https://github.com/shubhamkumar27/Summergeeks-Visitor-Management-System/
     ```
     
 - Install all dependencies by executing the following command:
@@ -115,4 +115,4 @@ Let a visitor wants to meet a host, he goes to reception and asks for the same. 
 - If you want to add any feature or want to fix any issue, please make a pull request.
 - Contact me at my mail id - shubhamkumar8180323@gmail.com - for any kind of help.
 
-### Made with ♥ by `Shubham Kumar`
+#### Made with ♥ by `Shubham Kumar`
