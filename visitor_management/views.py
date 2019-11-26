@@ -1,7 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User, auth
-from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from accounts.models import Host
 
@@ -13,7 +12,6 @@ def home(request):
 def doctors(request):
     hosts = Host.objects.all()
     parameters = {'hosts':hosts}
-    print(hosts) 
     return render(request,'doctors.html',parameters)
 
 ## Login page for admin
@@ -28,8 +26,7 @@ def loginPage(request):
             auth.login(request, user)
             return redirect("/")
         else:
-            messages.info(request,'Invalid credentials !!')
-            return redirect('login')
+            return redirect('/admin_login/')
 
     else:
         return render(request,'admin_login.html')
