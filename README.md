@@ -8,7 +8,7 @@ Being a web application it also serves as an organisation's official website whe
 This project is made by keeping a healthcare organisation in mind. Though it can be modified for any organisation.
 
 #### Why i made it organisation specific?
-Well !, as it also acts as an organisation's official website, so i took an example organisation. Also, its always better to explain with examples ;)
+Well !, as it also acts as an organisation's official website, so i took an example organisation. Also, its always better to explain with examples ; )
 
 ## Visit deployed website
 - Deployed on pythonanywhere : http://healthplus.pythonanywhere.com/
@@ -71,7 +71,7 @@ Let a visitor wants to meet a host, he goes to reception and asks for the same. 
 ## Local Machine development setup
 - Clone the repository on your machine 
     ```
-    git clone https://github.com/shubhamkumar27/Summergeeks-Visitor-Management-System/
+    git clone https://github.com/shubhamkumar27/Summergeeks-Visitor-Management-System.git
     ```
     
 - Install all dependencies by executing the following command:
