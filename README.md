@@ -83,16 +83,15 @@ Let a visitor wants to meet a host, he goes to reception and asks for the same. 
     ```
     UPDATE : EMAIL_HOST_USER = "your email id" 
     UPDATE : EMAIL_HOST_PASSWORD = "your email id password"
-    
-    ( Make sure you enable less secure apps in your google account, so that it sends email ! )
     ```
+    ( Make sure you <a href='https://myaccount.google.com/lesssecureapps'>enable less secure apps</a> in your google account, so that it sends email ! )
    
 - Now you need to edit some lines in views.py file inside accounts folder
   - INSIDE email function:
     ```
     UPDATE : sender = 'your email id'
     ```
-  - GO to way2sms.com, create your account and genetrate your test apikey and secret key. Now go INSIDE sendsms function:
+  - GO to <a href='https://www.way2sms.com/'>way2sms</a>, create your account and genetrate your test apikey and secret key. Now go INSIDE sendsms function:
     ```
     UPDATE : 'apikey':'your api key',
     UPDATE : 'secret':'your secret key',
