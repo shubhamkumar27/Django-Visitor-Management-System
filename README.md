@@ -95,6 +95,7 @@ Let a visitor wants to meet a host, he goes to reception and asks for the same. 
     ```
     UPDATE : 'apikey':'your api key',
     UPDATE : 'secret':'your secret key',
+    UPDATE : 'senderid' : 'your way2sms account email id'
     ```
     
 - Now go inside the main folder which was cloned (manage.py file will be present there), now open a terminal in that directory and run follwing commands:
