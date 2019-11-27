@@ -131,6 +131,7 @@ def edit_delete(request):
 
 # Sends the email to both host and visitor
 def email(subject,visitor,rec,host=None):
+    ## FILL IN YOUR DETAILS HERE
     sender = 'your email id'
     if host:
         html_content = render_to_string('visitor_mail_template.html', {'visitor':visitor,'host':host}) # render with dynamic value
@@ -149,6 +150,7 @@ def email(subject,visitor,rec,host=None):
 def sendsms(subject,visitor,host):
     URL = 'https://www.way2sms.com/api/v1/sendCampaign'
     msg = "Hey, "+host.host_name+", Your Upcoming meeting is with : "+visitor.visitor_name+", Contact no. : "+str(visitor.visitor_phone)+", Email Id : "+visitor.visitor_email+". Check-In Time is : "+str(visitor.time_in)[11:16]
+    ## FILL IN YOUR DETAILS HERE
     req_params = {
     'apikey':'your api key',
     'secret':'your secret key',

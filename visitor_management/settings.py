@@ -127,6 +127,7 @@ STATICFILES_DIRS = (
 ## Email Setup
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
+## FILL IN YOUR DETAILS HERE
 EMAIL_HOST_USER = 'your email id'
 EMAIL_HOST_PASSWORD = 'your email id password'
 EMAIL_USE_TLS = True
