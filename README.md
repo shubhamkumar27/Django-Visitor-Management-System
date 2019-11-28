@@ -5,15 +5,15 @@ This is a simple web application which can be used for managing meetings and vis
 
 Being a web application it also serves as an organisation's official website where other people can visit and get more information about the organisation.
 
-This project is made by keeping a healthcare organisation in mind. Though it can be modified for any organisation.
+#### This project is made by keeping a healthcare organisation in mind. Though it can be modified for any organisation.
 
 #### Why i made it organisation specific?
-Well !, as it also acts as an organisation's official website, so i took an example organisation. Also, its always better to explain with examples ; )
+Well !, as it also acts as an organisation's official website, so i took an example organisation. Also, its always better to explain with examples : )
 
 ## Visit deployed website
 - Deployed on pythonanywhere : http://healthplus.pythonanywhere.com/
 
-### Watch Demo video
+### Watch Demo video (Recommended)
 - Visit - https://youtu.be/G-DM0ky2p9c
 <a href="https://youtu.be/G-DM0ky2p9c" target="_blank"><img src="https://drive.google.com/uc?id=153qoLXimg2ov340O5EDiTG00HD7T5bEU" alt="Demo Video" title="Visitor management system" /></a>
 
@@ -63,7 +63,7 @@ These two models are connected using the meeting ID which is stored in both of t
 - Descriptive dashboard that shows all hosts with their images, details and status.
 - Keeps track of all meetings and respective visitor details.
 - Emails and SMS notification to both visitor and Host.
-- Easy to add, delete or edit a host profile.
+- Easy to ADD, DELETE or EDIT a host profile.
 
 ## Solution Workflow
 Let a visitor wants to meet a host, he goes to reception and asks for the same. The receptionist/admin checks for the host on the dashboard. Dashboard shows information of all hosts with their current status. If they are busy it shows the current visitor details and gives a checkout option. If the host is free, admin fills the visitor details in the meeting form and clicks the check-in button. As the button is clicked, a mail and a sms is sent to host informing about visitor details. When the meeting is over, the visitor while going back asks the receptionist for the checkout. After check-out button is clicked, a mail with all details of meeting is sent to visitor's mail id.
@@ -110,6 +110,8 @@ Let a visitor wants to meet a host, he goes to reception and asks for the same. 
     python manage.py runserver
     ```
 - Now server will start at - http://127.0.0.1:8000/
+
+
 
 ## Want to contribute or found any bug ?
 - Make sure you raise an issue if you find any error or bug.
