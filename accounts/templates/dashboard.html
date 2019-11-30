@@ -1,12 +1,15 @@
 {% extends 'base.html' %}
 {% load static from staticfiles %}
-{% block title %}<title>Dashboard</title>{% endblock %}
+{% block title %}
+<meta http-equiv="refresh" content="20">
+<title>Dashboard</title>
+{% endblock %}
 {% block nav %} 
-<div class="form-inline my-2 my-lg-0">
+<div class="form-inline my-2 my-lg-0 ml-auto" >
         {% if user.is_authenticated %}
-        <h6 class="text-dark mx-3 my-auto">Hello, Admin</h6>
-        <a class="btn btn-primary mx-2" href="/dashboard" role="button">Dashboard</a>
-        <a class="btn btn-danger mx-2" href="/logout" role="button">Logout</a>
+        <a class="btn btn-dark mx-2" data-toggle='modal', data-target='#profilemodal' type="button" href="/dashboard" role="button">Profile Manager</a>
+        <a class="btn btn-dark mx-2" data-toggle='modal', data-target='#meetingmodal' type="button" href="/dashboard" role="button">Meeting History</a>
+        <a class="btn btn-danger mx-2" data-toggle='modal', data-target='#logoutmodal' type="button" href="/logout" role="button">Logout</a>
         {% else %}
         <a class="btn btn-success mx-2" href="/admin_login" role="button">Admin Login</a>
         {% endif %}
@@ -14,10 +17,21 @@
   </div>
 {% endblock %}
 {% block header %}
-<header class="masthead text-white text-center" style="background:url('{% static '/img/bg-3.png' %}')no-repeat center fixed;background-size:cover;">
-    <a class="btn btn-warning btn-lg mx-5 mb-2 font-weight-bolder" href="meeting_history/" role="button" style="width: 27rem; display: inline-block;">Today's Meeting History</a>
-    <a class="btn btn-warning btn-lg mx-5 mb-2 font-weight-bolder" href="profile_manager/" role="button" style="width: 27rem; display: inline-block;">Profile Manager</a>
-    <hr class="bg-light" style="width: 60rem;">
+<header class="masthead text-white text-center" style="background:url('{% static '/img/bg-3.png' %}') center fixed;background-size:100% 100%;">
+    {% if messages %}
+    {% for msg in messages %}
+    <div class="alert alert-{{ msg.tags }} alert-dismissible fade show mx-auto text-lg-left" style="width: 80%;" role="alert">
+            <strong> {{ msg }} </strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+    {% endfor  %}
+    {% endif %}
+    <div class="text-center">
+        <h1 class='text-monospace text-light'>SELECT YOUR HOST FOR MEETING</h1>
+    </div>
+    <hr class="bg-light" style="width: 70%;">
     <div class="container">
             <div class="row">
             {% for p in hosts %}
@@ -34,15 +48,14 @@
                                     <ul class="list-group list-group-flush">
                                       {% if p.status %}
                                         <li class="list-group-item bg-success text-white">FREE</li>
-                                        <li class="list-group-item"><button class="btn btn-primary mx-2" type="submit" value="{{ p.id }}" name="meeting">Arrange Meeting</button></li>
+                                        <li class="list-group-item">
+                                            <button class="btn btn-primary mx-2" style="width: 90%;" type="submit" value="{{ p.id }}" name="meeting">Arrange Meeting</button>
+                                        </li>
                                         {% else %}
                                         <li class="list-group-item bg-danger text-white">BUSY</li>
-                                        
                                         <li class="list-group-item">
-                                        <button class="btn btn-warning" style="display:inline-block;" type="submit" value="{{ p.current_meeting_id }}" name="visitor">Visitor</button>
-                                        <button class="btn btn-danger" style="display:inline-block;" type="submit" value="{{ p.current_meeting_id }}" name="check_out">Check Out</button>
+                                        <button class="btn btn-warning" style="width: 90%;" type="submit" value="{{ p.current_meeting_id }}" name="visitor">Current Visitor</button>
                                         </li>
-                                        
                                         {% endif %}
                                       
                                     </ul>
@@ -53,11 +66,93 @@
                 </div>
                 {% endfor %}
                 </div>
+                </div>
+
+<div id="profilemodal" class='modal fade' role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content text-dark">
+            <div class="modal-header font-weight-bolder ">
+                    <h6 class="modal-title">Visitors are not allowed to use this !!</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+            </div>
+            <form action = "verification/" method="post">{% csrf_token %}
+            <div class="modal-body">
+                    <div class="form-group row my-auto">
+                    <label for="inputPassword2" class="col-form-label mx-3">Enter Security password</label>
+                    <div class="ml-3">
+                    <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password"">
+                </div>
+                </div>
+                
+            </div>
+            <div class="modal-footer text-center">
+                <button class="btn bg-success btn-rounded text-light" name="profile" value="profile" type="submit">Verify</button>
+            </div>
+        </form>
+        </div>
+    </div>
 </div>
+
+
+<div id="meetingmodal" class='modal fade' role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content text-dark">
+                <div class="modal-header font-weight-bolder ">
+                        <h6 class="modal-title">Visitors are not allowed to use this !!</h6>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                </div>
+                <form action = "verification/" method="post">{% csrf_token %}
+                <div class="modal-body">
+                        <div class="form-group row my-auto">
+                        <label for="inputPassword2" class="col-form-label mx-3">Enter Security password</label>
+                        <div class="ml-3">
+                        <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password"">
+                    </div>
+                    </div>
+                    
+                </div>
+                <div class="modal-footer text-center">
+                    <button class="btn bg-success btn-rounded text-light" name="meeting" value="meeting" type="submit">Verify</button>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+
+<div id="logoutmodal" class='modal fade' role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content text-dark">
+                    <div class="modal-header font-weight-bolder ">
+                            <h6 class="modal-title">Visitors are not allowed to use this !!</h6>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                    </div>
+                    <form action = "verification/" method="post">{% csrf_token %}
+                    <div class="modal-body">
+                            <div class="form-group row my-auto">
+                            <label for="inputPassword2" class="col-form-label mx-3">Enter Security password</label>
+                            <div class="ml-3">
+                            <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password"">
+                        </div>
+                        </div>
+                        
+                    </div>
+                    <div class="modal-footer text-center">
+                        <button class="btn bg-success btn-rounded text-light" name="logout" value="logout" type="submit">Verify</button>
+                    </div>
+                </form>
+                </div>
+            </div>
+        </div>
 </header>
 {% endblock %}
 {% block footer %}
-<footer class="footer bg-light" style="height: 2rem;">
+<footer class="footer bg-light" style="height: auto; width: auto;">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 my-auto h-100 text-center text-lg-left">

@@ -2,15 +2,9 @@
 {% load static from staticfiles %}
 {% block title %}<title>Meeting History</title>{% endblock %}
 {% block nav %} 
-<div class="form-inline my-2 my-lg-0">
-        {% if user.is_authenticated %}
+<div class="form-inline my-2 my-lg-0 ml-auto">
         <h6 class="text-dark mx-3 my-auto">Hello, Admin</h6>
-        <a class="btn btn-primary mx-2" href="/dashboard" role="button">Dashboard</a>
-        <a class="btn btn-danger mx-2" href="/logout" role="button">Logout</a>
-        {% else %}
-        <a class="btn btn-success mx-2" href="/admin_login" role="button">Admin Login</a>
-        {% endif %}
-        
+        <a class="btn btn-primary mx-2" href="/dashboard" role="button">Dashboard</a>       
   </div>
 {% endblock %}
 {% block header %}

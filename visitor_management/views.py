@@ -24,7 +24,7 @@ def loginPage(request):
 
         if user is not None:
             auth.login(request, user)
-            return redirect("/")
+            return redirect("/dashboard")
         else:
             return redirect('/admin_login/')
 

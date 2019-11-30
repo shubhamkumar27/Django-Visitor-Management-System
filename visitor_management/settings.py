@@ -128,8 +128,8 @@ STATICFILES_DIRS = (
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 ## FILL IN YOUR DETAILS HERE
-EMAIL_HOST_USER = 'your email id'
-EMAIL_HOST_PASSWORD = 'your email id password'
+EMAIL_HOST_USER = 'healthplusnotification@gmail.com'
+EMAIL_HOST_PASSWORD = 'healthplus27'
 EMAIL_USE_TLS = True
 #EMAIL_USE_SSL = True
 

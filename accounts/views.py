@@ -1,16 +1,16 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from django.contrib import messages
 from django.contrib.auth.models import User, auth
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.contrib.auth.decorators import login_required
 from .models import Host, Meeting
-from pushbullet import PushBullet
 from .forms import *
 import datetime
 import requests
 import json
-
 
 # Create your views here.
 
@@ -20,6 +20,32 @@ def dashboard(request):
     hosts = sorted(list(h),key=lambda x: x.host_name)
     parameters = {'hosts':hosts}
     return render(request,'dashboard.html',parameters)
+
+def verify(request):
+    if request.method == 'POST':
+        key = request.POST.get('password')
+        user = auth.authenticate(username=request.user.username,password=key)
+        if user is not None:
+            if request.POST.get('profile'):
+                form = Add_profile()
+                return render(request, 'profile_manager.html', {'form' : form})
+
+            if request.POST.get('logout'):
+                auth.logout(request)
+                return redirect('/')
+
+            if request.POST.get('meeting'):
+                meetings = Meeting.objects.filter(date = datetime.datetime.now())
+                m = reversed(list(meetings))
+                info = {'meeting':m}
+                return render(request, 'meeting_history.html',info)
+        
+        else:
+            messages.warning(request,'Please enter valid credentials !!')
+            return redirect('/dashboard')
+
+    else:
+        return redirect('/dashboard')
 
 @login_required(login_url='/admin_login/')
 def meeting_manager(request):
@@ -32,27 +58,13 @@ def meeting_manager(request):
             meeting_details = {'meeting' : meeting, 'host' : host}
             return render(request, 'visitor_details.html', meeting_details)
 
-        elif request.POST.get("check_out"): # If checkout button is clicked, email is sent to visitor and host's status is set to free
-            m_id = request.POST.get("check_out")
-            meeting = Meeting.objects.get(id = m_id)
-            host = Host.objects.get(current_meeting_id=m_id)
-            host.status = True
-            host.current_meeting_id = None 
-            meeting.time_out = datetime.datetime.now()
-            host.save()
-            meeting.save()
-            rec = [meeting.visitor_email]
-            Subject = "HealthPlus Meeting Details"
-            visitor = meeting
-            email(Subject,visitor,rec,host)
-            return redirect('/dashboard')
-
         elif request.POST.get("meeting"): # Opens the meeting form
             host_id = request.POST.get("meeting")
             host = Host.objects.get(id = host_id)
             form = Meeting_form()
             param = {'form':form,'host':host}
             return render(request, 'meeting_form.html', param)
+
     else:
         return redirect('/dashboard')
 
@@ -72,19 +84,34 @@ def save_meeting(request):
             host.status = False
             host.save()
             rec = [host.host_email]
-            subject = "Visitor Information"
+            subject = instance.visitor_name +" Checked In !"
             visitor = instance
             email(subject,visitor,rec)
             sendsms(subject,visitor,host)
-    return redirect('/dashboard')
+            messages.success(request,'Information sent to Host, You will be called shortly !!')
+            return redirect('/dashboard')
+        else:
+            pass
+    else:
+        return redirect('/dashboard')
 
-# Shows the meetings history of that day
-@login_required(login_url='/admin_login/')
-def meeting_history(request):
-    meetings = Meeting.objects.filter(date = datetime.datetime.now())
-    m = reversed(list(meetings))
-    info = {'meeting':m}
-    return render(request, 'meeting_history.html',info)
+def checkout(request):
+    if request.method == 'GET':
+        meeting_id = request.GET['mid']
+        meeting = Meeting.objects.get(id = meeting_id)
+        host = next(iter(Host.objects.filter(current_meeting_id=meeting_id)), None)
+        if (meeting.time_out != None) and (host==None):
+            return HttpResponse(meeting.visitor_name+', Already Checked Out !!')
+        host.status = True
+        host.current_meeting_id = None 
+        meeting.time_out = datetime.datetime.now()
+        host.save()
+        meeting.save()
+        rec = [meeting.visitor_email]
+        Subject = "HealthPlus Meeting Details"
+        visitor = meeting
+        email(Subject,visitor,rec,host)
+        return HttpResponse(meeting.visitor_name+', Checked Out Successfully !!')
 
 # Opens the profile manager
 @login_required(login_url='/admin_login/')
@@ -95,8 +122,7 @@ def profile_manager(request):
             form.save()
             return redirect('/dashboard')
     else:
-        form = Add_profile()
-        return render(request, 'profile_manager.html', {'form' : form})
+        return redirect('/dashboard')
 
 # Checks for the given id in host database and fills the add profile form automatically with it
 @login_required(login_url='/admin_login/')
@@ -109,13 +135,17 @@ def edit_profile(request):
             form.save()
             return redirect('/dashboard')
     else:
-        return redirect('/dashboard/profile_manager')
+        return redirect('/dashboard')
 
 # checks which button was clicked, either edit or delete and redirects them respectively
 @login_required(login_url='/admin_login/')
 def edit_delete(request):
     if request.method=='POST':
         host_id =request.POST.get('id')
+        if host_id=='':
+            messages.warning(request,'Please enter a valid profile Id first !!')
+            form = Add_profile()
+            return render(request, 'profile_manager.html', {'form' : form})
         host = Host.objects.filter(id=host_id).first()
         if host:
             if request.POST.get('edit'):
@@ -125,14 +155,17 @@ def edit_delete(request):
             elif request.POST.get('delete'):
                 host.delete()
                 return redirect('/dashboard')
-        return redirect('/dashboard/profile_manager')
+        else:
+            messages.warning(request,'Profile not found !!')
+            form = Add_profile()
+            return render(request, 'profile_manager.html', {'form' : form})
     else:
-        return redirect('/dashboard/profile_manager')
+        return redirect('/dashboard')
 
 # Sends the email to both host and visitor
 def email(subject,visitor,rec,host=None):
     ## FILL IN YOUR DETAILS HERE
-    sender = 'your email id'
+    sender = 'healthplusnotification@gmail.com'
     if host:
         html_content = render_to_string('visitor_mail_template.html', {'visitor':visitor,'host':host}) # render with dynamic value
     else:

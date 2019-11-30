@@ -2,15 +2,9 @@
 {% load static from staticfiles %}
 {% block title %}<title>Meeting Information</title>{% endblock %}
 {% block nav %} 
-<div class="form-inline my-2 my-lg-0">
-        {% if user.is_authenticated %}
-        <h6 class="text-dark mx-3 my-auto">Hello, Admin</h6>
-        <a class="btn btn-primary mx-2" href="/dashboard" role="button">Dashboard</a>
-        <a class="btn btn-danger mx-2" href="/logout" role="button">Logout</a>
-        {% else %}
-        <a class="btn btn-success mx-2" href="/admin_login" role="button">Admin Login</a>
-        {% endif %}
-        
+<div class="form-inline my-2 my-lg-0 ml-auto">
+        <h6 class="text-dark mx-3 my-auto">Hello, Visitor</h6>
+        <a class="btn btn-primary mx-2" href="/dashboard" role="button">Dashboard</a>   
   </div>
 {% endblock %}
 
@@ -22,12 +16,11 @@
         <div class="col">
     <div class="card" style="width: 30rem;">
         <h5 class="card-header bg-info text-monospace text-light text-center">
-            <strong>Visitor's Information</strong>
+            <strong>Current Visitor's Information</strong>
         </h5>
     
         <div class="card-body px-lg-5  text-dark">
-                <form class="text-center" action="/dashboard/meeting/" method="POST">{% csrf_token %}
-                <div class="row">
+             <div class="row">
                     <div class="col">
                         <div class="md-form">
                             <small>Name</small>
@@ -40,21 +33,11 @@
                         <small>Email</small>
                         <h4>{{ meeting.visitor_email }}</h4>
                 </div>
-                <div class="row mx-auto">
 
-                <div class="md-form my-2 mx-auto" style="display:inline-block;">
-                        <small>Phone</small>
-                        <h4>{{ meeting.visitor_phone }}</h4>
-                </div>
-
-                <div class="md-form my-2 mx-auto" style="display:inline-block;">
+                <div class="md-form mt-4 mb-3">
                         <small>Check In time</small>
                         <h4>{{ meeting.time_in }}</h4>
                 </div>
-            </div>
-    
-                <button class="btn bg-danger btn-rounded my-2 mt-2 waves-effect z-depth-0 text-light" type="submit" value="{{ meeting.id }}" name="check_out" style="width: 10rem;">Check Out</button>
-                </form>
         </div>
         </div>
     </div>
@@ -76,10 +59,6 @@
 
                 </div>
             </div>
-              
-            <div class="card-footer bg-white" style="height: 3rem;"> 
-                    <img class="mx-auto my-auto" src="{% static 'img/logo.png' %}" style="height: 2rem; width: 10rem;" />
-                </div>
              
             
         
