@@ -162,6 +162,7 @@ def edit_delete(request):
     else:
         return redirect('/dashboard')
 
+
 # Sends the email to both host and visitor
 def email(subject,visitor,rec,host=None):
     ## FILL IN YOUR DETAILS HERE
