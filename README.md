@@ -3,7 +3,7 @@ A Visitor Management Web App made using Django.
 
 This is a simple web application which can be used for managing meetings and visitor details. It can keep track of all the meetings and can send emails and sms to host and visitor about their meeting details.
 
-Being a web application it also serves as an organisation's official website where other people can visit and get more information about the organisation.
+Being a web application **It also serves as an organisation's official website** where other people can visit and get more information about the organisation.
 
 #### This project is made by keeping a healthcare organisation in mind. Though it can be modified for any organisation.
 
@@ -16,6 +16,19 @@ Well !, as it also acts as an organisation's official website, so i took an exam
 ### Watch Demo video (Recommended)
 - Visit - https://youtu.be/qxKQe9csSGA
 <a href="https://youtu.be/qxKQe9csSGA" target="_blank"><img src="https://drive.google.com/uc?id=153qoLXimg2ov340O5EDiTG00HD7T5bEU" alt="Demo Video" title="Visitor management system" /></a>
+
+## Check-Out Provision
+Now, According to me, the best person who can be given the responsibility to checkout a visitor is the 'Host' itself.
+#### Why Host ??
+- If we give the checkout option openly on the dashboard, someone else may misuse the option and checkout for others.
+- Assume we use a verification system for checkout on dashboard, it may happen that the visitor forget to checkout after leaving and as it requires verification, the Host will be shown as BUSY on dashboard for an unknown time.
+- If we make the Checkout option manual, means the visitor is required to go to reception and ask for checkout, then also it may happen that visitor forget to visit reception after leaving. Also our system is made to be automatic and this will make it manual.
+- **As Host is the only person involved in the meeting after visitor, and he also knows that exactly when the visitor left, he can be given the option to checkout visitor.**
+#### How Host can Checkout Visitor ??
+- As we know that when a visitor makes a Check-In, Host is informed about it via Email and SMS. **I have given the Check-out button for that visitor in the same Email sent to Host, and asked him to click that button when the meeting is over**. As soon as the meeting is over, Host clicks the Checkout button given in the mail, and checkout of visitor is completed. Checkout Time is recorded and an Email is sent to visitor. Also the **Host status is set as FREE**, that means Host is ready for next meeting.
+- **Dashboard is capable to refresh itself after every 20 seconds(thanks to Meta refresh method!), so that any change in Host status is seen on the dashboard automatically.**
+
+**Watch the demo video given above to Know, how it exactly works. Screeshots of Emails and SMS are given below.**
 
 #### Screenshots of Emails and SMS
 <img src="https://drive.google.com/uc?id=1-Qjaqkki9E8cOrEBrfzYGVkpB-WCxNaG" alt="Emails and SMS" title="Screenshots" />
@@ -54,7 +67,7 @@ As there are two major things to store, which are host details and meeting/visit
     + time_in = `TimeField`
     + time_out = `TimeField`
     
-These two models are connected using the meeting ID which is stored in both of them, during meeting the status of host is set as busy and after the meeting is over, the meeting Id filled inside current_meeting_id is deleted and host's status is set to free. Also the checkout time is autofilled inside meeting details.
+These two models are connected using the meeting ID which is stored in both of them, during meeting the status of Host is set as BUSY and after the meeting is over, Host clicks the Checkout button given inside the Email. As the Checkout button is clicked, the meeting Id filled inside 'current_meeting_id' is deleted and Host's status is set to FREE. Also the checkout time is autofilled inside meeting details.
 
 ## Features
 - Simple and easy to use GUI.
