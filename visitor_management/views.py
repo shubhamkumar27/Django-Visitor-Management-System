@@ -30,10 +30,5 @@ def loginPage(request):
 
     else:
         return render(request,'admin_login.html')
-
-## Logout for admin
-@login_required(login_url='/admin_login/')
-def logout(request):
-    auth.logout(request)
-    return redirect('/')
+        
 

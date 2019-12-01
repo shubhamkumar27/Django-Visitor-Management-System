@@ -21,6 +21,7 @@ def dashboard(request):
     parameters = {'hosts':hosts}
     return render(request,'dashboard.html',parameters)
 
+## Verifies that only Admin uses these options and redirects them to required webpage respectively
 def verify(request):
     if request.method == 'POST':
         key = request.POST.get('password')
@@ -40,6 +41,7 @@ def verify(request):
                 info = {'meeting':m}
                 return render(request, 'meeting_history.html',info)
         
+        # When wrong password is given
         else:
             messages.warning(request,'Please enter valid credentials !!')
             return redirect('/dashboard')
@@ -51,14 +53,16 @@ def verify(request):
 def meeting_manager(request):
     if request.method == 'POST':
 
-        if request.POST.get("visitor"): # If visitor button is clicked, visitor details are shown
+        # If visitor button is clicked, visitor details are shown
+        if request.POST.get("visitor"): 
             meeting_id = request.POST.get("visitor")
             meeting = Meeting.objects.get(id = meeting_id)
             host = Host.objects.get(current_meeting_id = meeting_id)
             meeting_details = {'meeting' : meeting, 'host' : host}
             return render(request, 'visitor_details.html', meeting_details)
 
-        elif request.POST.get("meeting"): # Opens the meeting form
+        # Opens the meeting form
+        elif request.POST.get("meeting"): 
             host_id = request.POST.get("meeting")
             host = Host.objects.get(id = host_id)
             form = Meeting_form()
@@ -86,6 +90,7 @@ def save_meeting(request):
             rec = [host.host_email]
             subject = instance.visitor_name +" Checked In !"
             visitor = instance
+            ## EMAIL AND SMS TO HOST
             email(subject,visitor,rec)
             sendsms(subject,visitor,host)
             messages.success(request,'Information sent to Host, You will be called shortly !!')
@@ -95,11 +100,13 @@ def save_meeting(request):
     else:
         return redirect('/dashboard')
 
+## Checkout function when Host clicks checkout button
 def checkout(request):
     if request.method == 'GET':
         meeting_id = request.GET['mid']
         meeting = Meeting.objects.get(id = meeting_id)
         host = next(iter(Host.objects.filter(current_meeting_id=meeting_id)), None)
+        # If checkout button already clicked
         if (meeting.time_out != None) and (host==None):
             return HttpResponse(meeting.visitor_name+', Already Checked Out !!')
         host.status = True
@@ -110,10 +117,11 @@ def checkout(request):
         rec = [meeting.visitor_email]
         Subject = "HealthPlus Meeting Details"
         visitor = meeting
+        # sending email to visitor
         email(Subject,visitor,rec,host)
         return HttpResponse(meeting.visitor_name+', Checked Out Successfully !!')
 
-# Opens the profile manager
+# profile manager that saves host profile
 @login_required(login_url='/admin_login/')
 def profile_manager(request):
     if request.method=='POST':
@@ -143,6 +151,7 @@ def edit_delete(request):
     if request.method=='POST':
         host_id =request.POST.get('id')
         if host_id=='':
+            # If invalid profile id was given
             messages.warning(request,'Please enter a valid profile Id first !!')
             form = Add_profile()
             return render(request, 'profile_manager.html', {'form' : form})
@@ -156,6 +165,7 @@ def edit_delete(request):
                 host.delete()
                 return redirect('/dashboard')
         else:
+            # If no profile was found
             messages.warning(request,'Profile not found !!')
             form = Add_profile()
             return render(request, 'profile_manager.html', {'form' : form})
@@ -166,12 +176,14 @@ def edit_delete(request):
 # Sends the email to both host and visitor
 def email(subject,visitor,rec,host=None):
     ## FILL IN YOUR DETAILS HERE
-    sender = 'healthplusnotification@gmail.com'
+    sender = 'your email id'
     if host:
         html_content = render_to_string('visitor_mail_template.html', {'visitor':visitor,'host':host}) # render with dynamic value
     else:
         html_content = render_to_string('host_mail_template.html', {'visitor':visitor}) # render with dynamic value
     text_content = strip_tags(html_content)
+
+    # try except block to avoid wesite crashing due to email error
     try:
         msg = EmailMultiAlternatives(subject, text_content, sender, rec)
         msg.attach_alternative(html_content, "text/html")
@@ -193,6 +205,7 @@ def sendsms(subject,visitor,host):
     'message':msg,
     'senderid':'your way2sms account email id'
     }
+    # try except block to avoid wesite crashing due to SMS error
     try:
         requests.post(URL, req_params)
     except:
