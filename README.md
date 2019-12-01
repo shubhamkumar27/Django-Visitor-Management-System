@@ -15,7 +15,7 @@ Well !, as it also acts as an organisation's official website, so i took an exam
 
 ### Watch Demo video (Recommended)
 - Visit - https://youtu.be/qxKQe9csSGA
-<a href="https://youtu.be/qxKQe9csSGA" target="_blank"><img src="https://drive.google.com/uc?id=153qoLXimg2ov340O5EDiTG00HD7T5bEU" alt="Demo Video" title="Visitor management system" /></a>
+<a href="https://youtu.be/qxKQe9csSGA" target="_blank"><img src="https://drive.google.com/uc?id=13DQI-6huMaRoOWvrKPfhj2NVe35ink4r" alt="Demo Video" title="Visitor management system" /></a>
 
 ## Check-Out Provision
 Now, According to me, the best person who can be given the responsibility to checkout a visitor is the 'Host' itself.
@@ -70,16 +70,22 @@ As there are two major things to store, which are host details and meeting/visit
 These two models are connected using the meeting ID which is stored in both of them, during meeting the status of Host is set as BUSY and after the meeting is over, Host clicks the Checkout button given inside the Email. As the Checkout button is clicked, the meeting Id filled inside 'current_meeting_id' is deleted and Host's status is set to FREE. Also the checkout time is autofilled inside meeting details.
 
 ## Features
+- Works as both, Official website and Visitor management system.
 - Simple and easy to use GUI.
 - Faster load speeds (thanks to Django!).
-- Password secured admin panel/dashboard.
+- Password secured Visitor management dashboard.
 - Descriptive dashboard that shows all hosts with their images, details and status.
 - Keeps track of all meetings and respective visitor details.
 - Emails and SMS notification to both visitor and Host.
-- Easy to ADD, DELETE or EDIT a host profile.
+- Secure and Easy to **ADD, DELETE or EDIT a Host profile**.
 
 ## Solution Workflow
-Let a visitor wants to meet a host, he goes to reception and asks for the same. The receptionist/admin checks for the host on the dashboard. Dashboard shows information of all hosts with their current status. If they are busy it shows the current visitor details and gives a checkout option. If the host is free, admin fills the visitor details in the meeting form and clicks the check-in button. As the button is clicked, a mail and a sms is sent to host informing about visitor details. When the meeting is over, the visitor while going back asks the receptionist for the checkout. After check-out button is clicked, a mail with all details of meeting is sent to visitor's mail id.
+- Let a visitor wants to meet a host, he goes to office and checks for that Host on the Dashboard Screen installed for visitors. Dashboard shows information of all Hosts with their current status.
+- If the Host is **BUSY** it shows the current visitor details. And if the host is **FREE**, an 'Arrange Meeting' button is shown.
+- Visitor clicks on that arrange meeting button and a 'Meeting Form' is opened, visitor fills his/her details in that form and clicks on Check-In button.
+- As the Check-In button is clicked, an Email with all deatils of visitor and a Check-out button for that visitor is sent to Host. A SMS is also sent to Host about Visitor's details. Status of the Host is changed to **BUSY** on the dashboard. 
+- After the meeting is over, the visitor leaves the office and Host clicks on that 'Check-out' button given inside the mail. As soon as it is clicked, the Host's status is set as **FREE** again and Checkout time is recorded for that meeting. An Email with all the meeting details is sent to the visitor's Email Id.
+- Dashboard refreshes itself automatically after 20 seconds and Host is again seen as **FREE** on the dasboard.
 
 ## Local Machine development setup
 - Clone the repository on your machine 
