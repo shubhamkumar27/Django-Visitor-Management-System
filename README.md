@@ -14,11 +14,11 @@ Well !, as it also acts as an organisation's official website, so i took an exam
 - Deployed on pythonanywhere : http://healthplus.pythonanywhere.com/
 
 ### Watch Demo video (Recommended)
-- Visit - https://youtu.be/G-DM0ky2p9c
-<a href="https://youtu.be/G-DM0ky2p9c" target="_blank"><img src="https://drive.google.com/uc?id=153qoLXimg2ov340O5EDiTG00HD7T5bEU" alt="Demo Video" title="Visitor management system" /></a>
+- Visit - https://youtu.be/qxKQe9csSGA
+<a href="https://youtu.be/qxKQe9csSGA" target="_blank"><img src="https://drive.google.com/uc?id=153qoLXimg2ov340O5EDiTG00HD7T5bEU" alt="Demo Video" title="Visitor management system" /></a>
 
 #### Screenshots of Emails and SMS
-<img src="https://drive.google.com/uc?id=1X71Lvm98B2NQFzCbHYYrcpD1HHRorzS3" alt="Emails and SMS" title="Screenshots" />
+<img src="https://drive.google.com/uc?id=1-Qjaqkki9E8cOrEBrfzYGVkpB-WCxNaG" alt="Emails and SMS" title="Screenshots" />
 
 ## Technology Stack
 - Django - Backend
