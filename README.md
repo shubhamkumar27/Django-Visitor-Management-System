@@ -130,7 +130,8 @@ These two models are connected using the meeting ID which is stored in both of t
     ```
 - Now server will start at - http://127.0.0.1:8000/
 
-
+### Credits :
+- HTML mail templates are made on <a href="https://beefree.io/">beefree.io</a>
 
 ## Want to contribute or found any bug ?
 - Make sure you raise an issue if you find any error or bug.
